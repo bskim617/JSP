@@ -3,7 +3,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-//전송 데이터 수신
+	//전송 데이터 수신
 	request.setCharacterEncoding("utf-8");
 
 	String uid  = request.getParameter("uid");

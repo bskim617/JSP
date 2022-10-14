@@ -1,10 +1,12 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="config.DB"%>
+<%@page import="config.JDBC"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	Connection conn = DB.getInstance().getConnection();
+
+
+	Connection conn = JDBC.getInstance().getConnection();
 	Statement stmt = conn.createStatement();
 	ResultSet rs = stmt.executeQuery("SELECT * FROM `student`");
 %>
