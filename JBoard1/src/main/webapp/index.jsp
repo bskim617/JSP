@@ -6,3 +6,4 @@
 	}else{
 		pageContext.forward("./list.jsp");
 	}
+%>
