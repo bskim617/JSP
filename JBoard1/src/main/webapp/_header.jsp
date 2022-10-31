@@ -21,7 +21,7 @@
         <header>
             <h3><a href="/JBoard1">Board System v1.0</a></h3>
             <p>
-                <span class="nick"><%= sessUser.getNick() %>></span>님 반갑습니다.
+                <span class="nick"><%= sessUser.getNick() %></span>님 반갑습니다.
                 <a href="/JBoard1/user/proc/logout.jsp" class="logout">[로그아웃]</a>
             </p>
         </header>
