@@ -10,7 +10,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	
-	// 다오 객체 가져오기
+	// DAO 객체 가져오기
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
 	// 글 가져오기
