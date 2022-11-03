@@ -35,7 +35,7 @@
 	article.setRegip(regip);
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
-	int parent = dao.insertArticel(article);
+	int parent = dao.insertArticle(article);
 	
 	// 파일을 첨부했으면 파일처리
 	if(fname != null){

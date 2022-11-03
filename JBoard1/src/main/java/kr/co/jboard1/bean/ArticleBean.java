@@ -13,7 +13,7 @@ public class ArticleBean {
 	private String regip;
 	private String rdate;
 	
-	// 추가
+	// 추가 필드
 	private String nick;
 	private String fname;
 	
@@ -125,5 +125,4 @@ public class ArticleBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
 }

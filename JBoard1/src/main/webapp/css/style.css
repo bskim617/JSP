@@ -1,5 +1,5 @@
- /* 태그 초기설정 */
- * {
+/* 태그 초기화 */
+* {
     margin: 0;
     padding: 0;
     font: normal 12px '돋움';
@@ -23,7 +23,6 @@ header {
     border-bottom: 1px solid #ebebeb;
     box-sizing: border-box;
 }
-
 header > h3 {
     float: left;
     color: #777;
@@ -32,23 +31,31 @@ header > h3 {
     margin-left: 10px;
 }
 
-header > p {float: right; margin-top: 10px; margin-right: 10px;}
-header > p > .nick {font-weight: bold;}
-header > p > .logout:hover {text-decoration: underline;}
+header > p {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+header > p > .nick {
+    font-weight: bold;
+}
+header > p > .logout:hover {
+    text-decoration: underline;
+}
 
-/* 메인공통 */ 
+/* 메인공통 */
 main {
     width: 100%;
     height: auto;
 }
 
-/* 푸터공통 */ 
+/* 푸터공통 */
 footer {
     width: 100%;
     height: 35px;
     background: #f7f7f7;
-    border-bottom: 1px solid #ebebeb;
-    box-sizing: border-box;
+    border-top: 1px solid #ebebeb;
+    box-sizing: border-box;            
 }
 
 footer > p {
@@ -68,12 +75,12 @@ footer > p {
 #user.login > form {
     position: relative;
     width: 100%;
-    height: auto;
+    height: auto;            
 }
 #user.login > form > table {
     margin-left: 50px;
     margin-top: 26px;
-} 
+}
 #user.login > form > table tr {}
 #user.login > form > table tr > td {}
 #user.login > form > table tr > td > img {width: 20px;}
@@ -83,7 +90,7 @@ footer > p {
     border: 1px solid #e4eaec;
     background: #f7f7f7;
     margin-top: 4px;
-    margin-left: 6px;        
+    margin-left: 6px;            
 }
 #user.login > form > .btnLogin {
     position: absolute;
@@ -109,7 +116,7 @@ footer > p {
 }
 #user.login > .info > a {
     float: right;
-} 
+}
 
 /* 약관 */
 #user.terms {
@@ -170,7 +177,7 @@ footer > p {
 /* 회원가입 */
 #user.register {
     width: 600px;
-    height: auto;
+    height: auto;            
     margin: 60px auto;
     overflow: hidden;
 }
@@ -201,7 +208,7 @@ footer > p {
 }
 #user.register table input {
     width: 160px;
-    height: 20px;
+    height: 22px;
     border: 1px solid #e4eaec;
     background: #f7f7f7;
     text-indent: 6px;
@@ -222,7 +229,6 @@ footer > p {
 
 #user.register > form > div {
     float: right;
-
 }
 #user.register > form > div > .btnCancel {
     display: inline-block;
@@ -241,7 +247,7 @@ footer > p {
 #board.list {
     position: relative;
     width: 720px;
-    height: auto;
+    height: auto;            
     margin: 60px auto;
 }
 #board.list > table {
@@ -251,9 +257,10 @@ footer > p {
     border-spacing: 0;
     border-top: 2px solid #111;
 }
+
 #board.list > table caption {
     text-align: left;
-    margin-top: 6px;
+    margin-bottom: 6px;
 }
 #board.list > table tr {}
 #board.list > table th {
@@ -262,13 +269,18 @@ footer > p {
     background: #e5ecef;
     border-bottom: 1px solid #d1dee2;
 }
-
+#board.list > table th:nth-child(1) {}
+#board.list > table th:nth-child(2) {}
+#board.list > table th:nth-child(3) {}
+#board.list > table th:nth-child(4) {}
+#board.list > table th:nth-child(5) {}
 #board.list > table td {
     width: auto;
     height: 38px;
     border-bottom: 1px solid #e9e9e9;
     text-align: center;
 }
+
 #board.list > table td:nth-child(2) {text-align: left;}
 
 #board.list > .page {
@@ -300,11 +312,10 @@ footer > p {
     background: #4b545e;
     color: #fff;
 }
-
 /* 글쓰기 */
 #board.write {
     width: 720px;
-    height: auto;
+    height: auto;            
     margin: 60px auto;
     overflow: hidden;
 }
@@ -349,21 +360,22 @@ footer > p {
     float: right;
     margin-top: 10px;
 }
-#board.write > form .btn {
+#board.write > form .btn  {
     padding: 8px;
     border: 1px solid #bebebe;
 }
 #board.write > form .btnCancel {}
 #board.write > form .btnComplete {
     padding: 7px;
-    border: 1ppx solid #3b3c3f;
+    border: 1px solid #3b3c3f;
     background: #4b545e;
     color: white;
 }
+
 /* 글보기 */
 #board.view {
     width: 720px;
-    height: auto;
+    height: auto;            
     margin: 60px auto;
     overflow: hidden;
 }
@@ -434,23 +446,22 @@ footer > p {
 }
 
 #board.view > .commentList {}
-#board.view > .commentList h3 {}
-#board.view > .commentList span {}
+#board.view > .commentList  h3 {}
+#board.view > .commentList  span {}
 #board.view > .commentList .content {
     padding: 10px;
     box-sizing: border-box;
 }
 #board.view > .commentList > article > div {
     text-align: right;
-}
-
+}        
 #board.view > .commentList .empty {
     padding: 20px;
     text-align: center;
     box-sizing: border-box;
 }
 
-#board.view > .commentForm  {
+#board.view > .commentForm {
     overflow: hidden;
 }
 #board.view > .commentForm > h3 {}
@@ -473,15 +484,16 @@ footer > p {
 }
 #board.view > .commentForm div > .btnComplete {
     padding: 7px;
-    border: 1ppx solid #3b3c3f;
+    border: 1px solid #3b3c3f;
     background: #4b545e;
     color: white;
 }
 
+
 /* 글수정 */
 #board.modify {
     width: 720px;
-    height: auto;
+    height: auto;            
     margin: 60px auto;
     overflow: hidden;
 }
@@ -526,14 +538,14 @@ footer > p {
     float: right;
     margin-top: 10px;
 }
-#board.modify > form .btn {
+#board.modify > form .btn  {
     padding: 8px;
     border: 1px solid #bebebe;
 }
 #board.modify > form .btnCancel {}
 #board.modify > form .btnComplete {
     padding: 7px;
-    border: 1ppx solid #3b3c3f;
+    border: 1px solid #3b3c3f;
     background: #4b545e;
     color: white;
 }
