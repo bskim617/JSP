@@ -7,12 +7,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
 import kr.co.jboard1.db.Sql;
 
 public class ArticleDAO {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	
 	
 	private static ArticleDAO instance = new ArticleDAO();
 	public static ArticleDAO getInstance() {
@@ -24,6 +31,7 @@ public class ArticleDAO {
 	public int insertArticle(ArticleBean article) {
 		int parent = 0;
 		try{
+			logger.info("insertArticle start...");
 			Connection conn = DBCP.getConnection();
 			
 			// 트랜젝션 시작
@@ -54,6 +62,7 @@ public class ArticleDAO {
 			conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return parent;
@@ -61,6 +70,7 @@ public class ArticleDAO {
 	
 	public void insertFile(int parent, String newName, String fname) {
 		try{
+			logger.info("insertFile start...");
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
@@ -73,6 +83,7 @@ public class ArticleDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
