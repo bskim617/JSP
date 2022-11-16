@@ -8,40 +8,34 @@
 <script>
 	$(function(){
 		$('.next').click(function(){
-			
 			let isCheck1 = $('input[class=terms]').is(':checked');
-			let isCheck2 = $('input[class=privacy]').is(':checked');
+			let isCheck2 = $('input[class=privacy]').is(':checked');			
 			
 			if(isCheck1 && isCheck2){
-				
-				return true;
+				return true;	
 			}else{
 				alert('동의 체크를 하셔야 합니다.');
-				return false;
+				return false;	
 			}
-			
 		});
 	});
 </script>
-
-
 <%
-	String terms = null;
+	String terms = null; 
 	String privacy = null;
-	
 	try{
 		Connection conn = DBCP.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(Sql.SELECT_TERMS);
 		
 		if(rs.next()){
-			terms = rs.getString(1);
+			terms   = rs.getString(1);
 			privacy = rs.getString(2);
 		}
 		
 		rs.close();
 		stmt.close();
-		conn.close();
+		conn.close();		
 		
 	}catch(Exception e){
 		e.printStackTrace();
@@ -73,4 +67,5 @@
         <a href="/JBoard1/user/register.jsp" class="next">다음</a>
     </p>            
 </main>
+
 <%@ include file="./_footer.jsp" %>

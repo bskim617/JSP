@@ -3,9 +3,12 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Hellow</title>
+	<title>Hello</title>
 </head>
 <body>
 	<h3>Hello JSP!</h3>
+	<a href="./Hello.jsp">Hello</a>
+	<a href="./Welcome.jsp">Welcome</a>
+	<a href="./Greeting.jsp">Greeting</a>
 </body>
 </html>

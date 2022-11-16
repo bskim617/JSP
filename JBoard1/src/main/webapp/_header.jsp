@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	UserBean sessUser = (UserBean)session.getAttribute("sessUser");
-
+	
 	if(sessUser == null){
 		response.sendRedirect("/JBoard1/user/login.jsp?success=101");
 		return; // 처리종료
@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>게시판</title>
+    <title>게시판</title>    
     <link rel="stylesheet" href="/JBoard1/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>

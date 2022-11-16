@@ -3,5 +3,3 @@
 	session.invalidate();
 	response.sendRedirect("/JBoard1/user/login.jsp?success=201");
 %>
-
-

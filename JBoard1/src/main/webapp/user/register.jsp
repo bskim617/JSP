@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/JBoard1/js/validation.js"></script>
 <script src="/JBoard1/js/postcode.js"></script>
+<script src="/JBoard1/js/validation.js"></script>
 <main id="user" class="register">
     <form action="/JBoard1/user/proc/registerProc.jsp" method="post">
         <table border="1">

@@ -116,7 +116,7 @@
 			console.log(jsonData);
 			
 			$.ajax({
-				url : '/JBoard1/proc/commentWriteProc.jsp',
+				url : '/JBoard1/proc/commentwriteProc.jsp',
 				method: 'POST',
 				data: jsonData,
 				dataType: 'json',
