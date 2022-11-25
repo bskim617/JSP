@@ -46,6 +46,6 @@ public class ModifyController extends HttpServlet {
 		User1Dao.getInstance().updateUser(vo);
 		
 		// 리다이렉트
-		resp.sendRedirect("/user1/list.do");
+		resp.sendRedirect("/Ch09/user1/list.do");
 	}
 }
