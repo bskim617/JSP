@@ -56,6 +56,9 @@ public class UserVO {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+	public void setGrade(String grade) {
+		this.grade = Integer.parseInt(grade);
+	}
 	public String getZip() {
 		return zip;
 	}
@@ -86,5 +89,4 @@ public class UserVO {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
 }

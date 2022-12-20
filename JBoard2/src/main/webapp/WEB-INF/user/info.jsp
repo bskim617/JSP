@@ -1,42 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
 <script>
-$(function(){
-	
-	$('.btnNext').click(function(){
-		
-		let uid = $('input[name=uid]').val();
-		let pass = $('input[name=pass]').val();
-		
-		let jsonData ={
-				"uid": uid,
-				"pass": pass
-		};
-		
+$(()=>{
+	$('.btnNext').click((e)=>{
+		e.preventDefault();
 		$.ajax({
-			url: '/JBoard2/user/info.do',
-			type: 'post',
-			data: jsonData,
-			dataType: 'json',
-			success: function(data){
-				
-				if(data.result == 1){
-					location.href = "/JBoard2/user/myInfo.do?uid=${uid}$pass=${pass}";
+			url:'/JBoard2/user/info.do',
+			method:'post',
+			data:{
+				"uid":$('input[name=uid]').val(),
+				"pass":$('input[name=pass]').val()
+				},
+			dataType:'json',
+			success:(data)=>{
+				if(data.result > 0){
+					alert('회원정보 수정페이지로 이동');
+					location.href = '/JBoard2/user/myInfo.do';
 				}else{
 					alert('비밀번호가 일치하지 않습니다.');
 				}
 			}
+			
 		});
-		return false;
 	});
 });
 </script>
 <main id="user">
     <section class="find findId">
         <form action="#">
-            <table border="0">
+        	<input type="hidden" name="uid" value="${sessUser.uid}">
+            <table>
                 <caption>비밀번호 확인</caption>
-                <input type="hidden" name="uid" value="${uid}"/>
                 <tr>
                     <td>비밀번호</td>
                     <td><input type="password" name="pass" placeholder="비밀번호 입력"/></td>
@@ -45,7 +39,7 @@ $(function(){
         </form>
         
         <p>
-            회원님의 정보를 보호하기 위해 비밀번호를 다시 확인합니다.
+           회원님의 정보를 보호하기 위해 비밀번호를 다시 확인합니다.
         </p>
 
         <div>

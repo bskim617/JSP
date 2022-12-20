@@ -13,13 +13,11 @@ import kr.co.jboard2.dao.UserDAO;
 import kr.co.jboard2.vo.TermsVO;
 
 @WebServlet("/user/terms.do")
-public class TermsController extends HttpServlet {
-
+public class TermsController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
 	public void init() throws ServletException {
-		
 	}
 	
 	@Override
@@ -34,7 +32,5 @@ public class TermsController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 	}
-
 }

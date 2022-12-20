@@ -2,53 +2,35 @@
 <jsp:include page="./_header.jsp"/>
 <script src="/JBoard2/js/emailAuth.js"></script>
 <script>
-	$(function(){
-		
-		$('.btnNext').click(function(){
-			
-			console.log('here1 : ' + isEmailAuthOk);
-			
-			if(!isEmailAuthOk){
-				console.log('here2');
-				let uid   = $('input[name=uid]').val();
+	$(()=>{
+		$('.btnNext').click((e)=>{
+			if(isEmailOK){
+				let uid = $('input[name=uid]').val();
 				let email = $('input[name=email]').val();
-				
-				let jsonData = {
-					"uid": uid,
-					"email": email
-				};
-				
 				$.ajax({
-					url: '/JBoard2/user/findPw.do',
-					type: 'post',
-					data: jsonData,
-					dataType: 'json',
-					success: function(data){
-						
+					url : '/JBoard2/user/findPw.do',
+					type : 'post',
+					data : {"uid":uid, "email":email},
+					dataType : 'json',
+					success:function(data){
 						if(data.result == 1){
-							location.href = "/JBoard2/user/findPwChange.do?uid="+uid;
+							location.href = '/JBoard2/user/findPwChange.do?uid='+uid;
 						}else{
-							alert('해당하는 사용자가 존재하지 않습니다.\n아이디와 이메일을 다시 확인하십시요.');
+							alert('해당하는 사용자가 존재하지 않습니다.\n아이디와 이메일을 다시 확인하십시오.');
 						}
-						
 					}
 				});
-				return false;
-				
+				return true;
 			}else{
-				alert('이메일 인증을 하셔야 합니다.');
-				console.log('here3');
 				return false;
 			}
-			
 		});
-		
 	});
 </script>
 <main id="user">
     <section class="find findPw">
         <form action="#">
-            <table border="0">
+            <table>
                 <caption>비밀번호 찾기</caption>                        
                 <tr>
                     <td>아이디</td>
@@ -60,10 +42,11 @@
                         <div>
                             <input type="email" name="email" placeholder="이메일 입력"/>
                             <button type="button" class="btnAuth" id="btnEmail">인증번호 받기</button>
+                             <span class="emailResult"></span>
                         </div>
                         <div class="auth">
                             <input type="text" name="auth" placeholder="인증번호 입력"/>
-                            <button type="button" class="btnConfirm" id="btnEmailConfirm">확인</button>
+                            <button type="button" class="btnConfirm" id="btnAuth">확인</button>
                         </div>
                     </td>
                 </tr>                        

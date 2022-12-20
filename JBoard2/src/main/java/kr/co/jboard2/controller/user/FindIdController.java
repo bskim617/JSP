@@ -32,25 +32,19 @@ public class FindIdController extends HttpServlet  {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-		String name  = req.getParameter("name");
+		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		
 		UserVO vo = UserDAO.getInstance().selectUserForFindId(name, email);
 		
-		// JSON 출력
+		// 회원정보 불일치
 		JsonObject json = new JsonObject();
-		
 		if(vo != null) {
 			json.addProperty("result", 1);
-			
-		    HttpSession sess = req.getSession();
-		    sess.setAttribute("sessUserForFindId", vo);
-			
+			HttpSession sess = req.getSession();
+			sess.setAttribute("sessUserForFindId", vo);
 		}else {
 			json.addProperty("result", 0);
 		}
-		
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}

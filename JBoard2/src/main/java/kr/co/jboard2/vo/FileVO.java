@@ -1,7 +1,6 @@
 package kr.co.jboard2.vo;
 
 public class FileVO {
-
 	private int fno;
 	private int parent;
 	private String newName;

@@ -1,82 +1,92 @@
-/**
- * 
- */
-let isEmailAuthOk = false;
+ // 이메일 인증코드
+let receiveCode = 0;
+let isEmailValiOK = false;
+let isEmailAuthOK = false;
 let preventDoubleClick = false;
-let receivedCode = 0;
 
-// 이메일 인증
-$(function(){
+$(()=>{
+	// 이메일 유효성 검사
+	$('input[name=email]').focusout(function(){
+		
+		let email = $(this).val();
+		
+		if(!email.match(regEmail)){
+			isEmailValiOK = false;
+			$('.emailResult').css('color', 'red').text('이메일이 유효하지 않습니다.');
+		}else{
+			isEmailValiOK = true;
+			$('.emailResult').text('');
+		}
+	});
+	$('input[name=email]').keydown(()=>{
+		isEmailOK = false;
+		$('.emailResult').text('');
+	});
 	
-	// 이메일 인증코드 발송 클릭
-	$('#btnEmail').click(function(){
-		
-		$(this).hide();			
-		let email = $('input[name=email]').val();
-		console.log('here1 : ' + email);
-		
-		if(email == ''){
-			alert('이미엘을 입력 하세요.');
-			return;
-		}
-		
-		if(preventDoubleClick){
-			console.log('here2');
-			return;
-		}
-		
-		preventDoubleClick = true;
-		
-		$('.resultEmail').text('인증코드 전송 중 입니다. 잠시만 기다리세요...');
-		console.log('here3');
-		
-		setTimeout(function(){
-			console.log('here4');
-			
-			$.ajax({
-				url: '/JBoard2/user/emailAuth.do',
-				method: 'GET',
-				data: {"email": email},
-				dataType: 'json',
-				success: function(data){
-					//console.log(data);
-					
-					if(data.status > 0){
-						// 메일전송 성공
-						console.log('here5');						
-						$('.resultEmail').text('이메일을 확인 후 인증코드를 입력하세요.');
-						$('.auth').show();
-						receivedCode = data.code;
-						
-					}else{
-						// 메일전송 실패
-						console.log('here6');						
-						alert('메일전송이 실패 했습니다.\n다시 시도 하시기 바랍니다.');
-					}
-				}
-			});
-		}, 1000);
+	$('.auth').hide();
+	
+	
+	// 이메일 인증
+	$('#btnEmail').click(emailAuth);
+	$('.btnAuth').click(()=>{
+		emailAuth();
 	});
 	
 	
-	// 이메일 인증코드 확인 버튼
-	$('#btnEmailConfirm').click(function(){
+	function emailAuth () {
+		if(isEmailOK) return false; // 인증 성공 비활성화
+		if(!isEmailValiOK) return false; // 유효성 실패 비활성화
+		if(preventDoubleClick)return false;// 인증 실패 연속 시도 금지
+		preventDoubleClick = true; // 1회 시도시 true
 		
-		let code = $('input[name=auth]').val();
-		
-		if(code == ''){
-			alert('이메일 확인 후 인증코드를 입력하세요.');
-			return;
+		let email = $('input[name=email]').val();
+		if(email == ''){
+			alert('이메일을 입력하세요');
 		}
+			
+		$('.emailResult').text('인증메일 전송 중 입니다...');
+		setTimeout(() => {
+			$.ajax({
+				url:'/JBoard2/user/emailAuth.do',
+				method:'GET',
+				data:{"email":email},
+				dataType:'json',
+				success:(data)=>{
+					if(data.status > 0) // 메일전송 성공
+					{
+						$('.auth').show();
+						$('#btnEmail').hide();
+						$('.emailResult').text('이메일을 확인후 인증코드를 입력하세요.');
+						isEmailAuthOK = true;
+						receiveCode = data.code;
+					}
+					else  // 메일전송 실패
+					{
+						isEmailOK = false;
+						alert('메일 전송이 실패했습니다. \n 다시 시도 하시기 바랍니다.');
+					}
+				}
+			});	
+		}, 1000);
+	}
 		
-		if(code == receivedCode){
-			isEmailAuthOk = true;
-			$('input[name=email]').attr('readonly', true);
-			$('.resultEmail').text('이메일이 인증 되었습니다.');				
-			$('.auth').hide();
-		}else{
-			isEmailAuthOk = false;
-			alert('인증코드가 틀립니다.\n다시 확인 하십시요.');
-		}
+	// 인증번호 확인
+	$('#btnAuth').click(()=>{
+		if(!isEmailAuthOK) return false;
+		if(isEmailOK) return false;
+		let result = $('input[name=auth]').val();
+		$('.emailResult').text('...');
+		setTimeout(() => {
+			if(result == receiveCode){
+				$('.auth, #btnEmail').hide();
+				$('.emailResult').css('color','blue').text('이메일이 인증되었습니다.');
+				$('input[name=email]').attr('readonly', true);
+				isEmailOK = true;
+			}
+			else{
+				$('.emailResult').text('인증에 실패하였습니다.');
+				isEmailOK = false;
+			}
+		}, 500);
 	});
 });

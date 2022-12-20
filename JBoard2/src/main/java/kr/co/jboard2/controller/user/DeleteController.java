@@ -11,24 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.dao.UserDAO;
+import kr.co.jboard2.service.UserService;
 
-
-@WebServlet("/user/checkUid.do")
-public class CheckUidController extends HttpServlet  {
+@WebServlet("/user/delete.do")
+public class DeleteController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	UserService service = UserService.INSTANCE;
 	
 	@Override
-	public void init() throws ServletException {
-	}
+	public void init() throws ServletException {}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int result = UserDAO.getInstance().selectCountUid(req.getParameter("uid"));
+		String uid = req.getParameter("uid");
+		int result = service.deleteUser(uid);
+		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
-		
-		PrintWriter writer= resp.getWriter();
+		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}
+
 }

@@ -3,7 +3,6 @@ package kr.co.jboard2.controller.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,37 +12,32 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.dao.UserDAO;
+import kr.co.jboard2.service.UserService;
+import kr.co.jboard2.vo.UserVO;
 
-@WebServlet("/user/findPw.do")
-public class FindPwController extends HttpServlet  {
+@WebServlet("/user/updatePw.do")
+public class ModifyPwController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	UserService service = UserService.INSTANCE;
 	
 	@Override
-	public void init() throws ServletException {
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 아이디찾기 세션 초기화
-		HttpSession sess = req.getSession();
-		sess.removeAttribute("sessUserForFindId");
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/user/findPw.jsp");
-		dispatcher.forward(req, resp);
-	}
+	public void init() throws ServletException {}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uid = req.getParameter("uid");
-		String email = req.getParameter("email");
-		
-		int result = UserDAO.getInstance().selectUserForFindPw(uid, email);
-
+		String pass = req.getParameter("pass");
+		int result = service.updateUserPassword(uid, pass);
+		if(result > 0) {
+			HttpSession session = req.getSession();
+			UserVO vo = (UserVO)session.getAttribute("sessUser");
+			vo.setPass(pass);
+			session.setAttribute("sessUser", vo);
+		}
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
-		
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
+		
 	}
 }

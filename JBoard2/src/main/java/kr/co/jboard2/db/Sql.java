@@ -16,20 +16,23 @@ public class Sql {
 												+ "`rdate`=NOW()";
 	
 	public static final String SELECT_USER       = "select * from `board_user` where `uid`=? and `pass`=SHA2(?, 256)";
+	public static final String SELECT_USER_FOR_CONFIRM = "SELECT COUNT(`uid`) from `board_user` where `uid`=? and `pass`=SHA2(?, 256)";
 	public static final String SELECT_COUNT_UID  = "select count(`uid`) from `board_user` where `uid`=?";
 	public static final String SELECT_COUNT_NICK = "select count(`nick`) from `board_user` where `nick`=?";
 	public static final String SELECT_TERMS      = "select * from `board_terms`";
-	public static final String SELECT_USER_FOR_FIND_ID = "select `uid`, `name`, `email`, `rdate` from `board_user` where `name`=? and `email`=?";
-	public static final String SELECT_USER_FOR_FIND_PW = "select count(`uid`) from `board_user` where `uid`=? and `email`=?";
-	public static final String SELECT_USER_BY_SESSID = "SELECT * FROM `board_user` WHERE `sessId`=? AND `sessLimitDate` > NOW()";
-	
-	public static final String UPDATE_USER = "update `board_user` set `name`=?, `nick`=?, `email`=?, `hp`=?, `zip`=?, `addr1`=?, `addr2`=?";
-	public static final String UPDATE_USER_PASSWORD = "update `board_user` set `pass`=SHA2(?, 256) where `uid`=?";
-	public static final String UPDATE_USER_FOR_SESSION = "update `board_user` set `sessId`=?, `sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) where `uid`=?";
-	public static final String UPDATE_USER_FOR_SESSION_OUT = "update `board_user` set `sessId`=NULL, `sessLimitDate`=NULL where `uid`=?";
+	public static final String SELECT_USER_FOR_FIND_ID = "SELECT `name`, `uid`,`email`, `rdate` FROM `board_user` WHERE `name` = ? AND `email` = ?";	
+	public static final String SELECT_USER_FOR_FIND_PW = "SELECT COUNT(`uid`) FROM `board_user` WHERE `uid` = ? AND `email` = ?";	
+	public static final String SELECT_USER_BY_SESSID = "SELECT * FROM `board_user` WHERE `sessId`= ? AND `sessLimitDate` > NOW()";
 	
 	
+	public static final String UPDATE_USER = "UPDATE `board_user` SET `name`=?, `nick`=?, `email`=?, `hp`=?, `zip`=?, `addr1`=?, `addr2`=? WHERE `uid`=?";
 	
+	public static final String UPDATE_USER_PASSWORD = "UPDATE `board_user` SET `pass` = SHA2(?,256) WHERE `uid` = ?";
+	public static final String UPDATE_USER_FOR_SESSION = "UPDATE `board_user` SET "
+														+ "`sessId` = ?, "
+														+ "`sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) "
+														+ "WHERE `uid` = ?";
+	public static final String UPDATE_USER_FOR_SESSION_OUT = "UPDATE `board_user` SET `sessId` = NULL, `sessLimitDate` = NULL WHERE `uid` = ?";
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
 												+ "`title`=?,"
@@ -55,12 +58,9 @@ public class Sql {
 	public static final String SELECT_MAX_NO = "select max(`no`) from `board_article`";
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` where `parent`=0";	
 	public static final String SELECT_COUNT_TOTAL_FOR_SEARCH = "SELECT COUNT(`no`) FROM `board_article` AS a "
-															+ "JOIN `board_user` AS b "
-															+ "ON a.uid = b.uid "
-															+ "WHERE `parent`=0 AND "
-															+ "(`title` LIKE ? OR "
-															+ "`nick` LIKE ?)";
-	
+																+ "JOIN `board_user` AS b "
+																+ "ON a.uid = b.uid "
+																+ "WHERE `parent`=0 AND (`title` LIKE ? OR `nick` LIKE ?)";
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b ON a.uid = b.uid "
 												+ "WHERE `parent` = 0 "
@@ -77,10 +77,9 @@ public class Sql {
 														+ "JOIN `board_user` AS b "
 														+ "ON a.uid = b.uid "
 														+ "WHERE `parent`=0 AND "
-														+ "(`title` LIKE ? OR "
-														+ "`nick` LIKE ?) "
-														+ "order by `no` desc "
-														+ "limit ?, 10";
+														+ "(`title` LIKE ? OR `nick` LIKE ?) "
+														+ "ORDER BY `no` DESC LIMIT ?, 10;";
+	
 	
 	public static final String SELECT_FILE = "select * from `board_file` where `fno`=?";
 	public static final String SELECT_FILE_WITH_PARENT = "select * from `board_file` where `parent`=?";
@@ -99,10 +98,35 @@ public class Sql {
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download` + 1 WHERE `fno`=?";  
 	
+	public static final String UPDATE_ARTICLE_COMMENT_UP = "UPDATE `board_article` SET `comment` = `comment` + 1 WHERE `no` = ?";
+	public static final String UPDATE_ARTICLE_COMMENT_DOWM = "UPDATE `board_article` SET `comment` = `comment` - 1 WHERE `no` = ?";
+	
 	public static final String UPDATE_COMMENT = "UPDATE `board_article` SET `content`=?, `rdate`=NOW() WHERE `no`=?";
+	public static final String DELETE_USER = "UPDATE `board_user` SET `grade` = 0, `wdate` = NOW() WHERE `uid` =?";
 	
 	public static final String DELETE_ARTICLE = "delete from `board_article` where `no`=? or `parent`=?";
 	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=?";
 	public static final String DELETE_FILE = "delete from `board_file` where `parent`=?";
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

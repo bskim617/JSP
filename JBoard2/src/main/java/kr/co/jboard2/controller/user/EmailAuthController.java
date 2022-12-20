@@ -21,28 +21,23 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 
 @WebServlet("/user/emailAuth.do")
-public class EmailAuthController extends HttpServlet {
-
+public class EmailAuthController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	
 	@Override
 	public void init() throws ServletException {
-		
 	}
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String receiverEmail = req.getParameter("email");
 		
-		//인증코드 생성
-		int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
+		// 인증코드 생성
+		int code = ThreadLocalRandom.current().nextInt(100000,1000000);
 		
 		// 기본정보
 		String sender = "bskim617@gmail.com";
 		String password = "cakvyjdvheplwona"; // 앱 비밀번호
-		
-		String title = "JBoard2 인증코드 입니다.";
-		String content = "인증코드 6자리는 " + code + " 입니다.";
+		String title = "인증 코드 메일입니다.";
+		String content = "인증코드 6자리는 " + code + "입니다.";
 		
 		// Gmail SMTP 정보 설정
 		Properties props = new Properties();
@@ -51,28 +46,29 @@ public class EmailAuthController extends HttpServlet {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		// 미리 등록한 사용자 정보를 가지고 Gmail 서버 인증
-		Session session = Session.getInstance(props, new Authenticator() {
+		
+		// 미리 등록한 사용자 정보를 가지고 GMail 서버 인증
+		Session session =  Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(sender, password);
 			}
 		});
 		
-		// 이메일 발상
+		// 이메일 발송
 		Message message = new MimeMessage(session);
 		int status = 0;
-		
 		try {
-			System.out.println("메일 전송 시작...");
+			System.out.println("메일 발송 시작...");
+			
 			message.setFrom(new InternetAddress(sender, "관리자", "UTF-8"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
 			message.setSubject(title);
 			message.setContent(content, "text/html;charset=utf-8");
 			Transport.send(message);
 			status = 1;
-			
-		}catch(Exception e) {
+			System.out.println("메일 전송 성공...");
+		} catch (Exception e) {
 			e.printStackTrace();
 			status = 0;
 			System.out.println("메일 전송 실패...");
@@ -82,14 +78,11 @@ public class EmailAuthController extends HttpServlet {
 		JsonObject json = new JsonObject();
 		json.addProperty("status", status);
 		json.addProperty("code", code);
-		
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 	}
-	
 }

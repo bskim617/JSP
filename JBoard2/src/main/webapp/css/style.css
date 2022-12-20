@@ -228,6 +228,10 @@ footer > p {
     display: none;
     margin-top: 6px;
 }
+.emailResult, .passResult{
+	font-size: 11px;
+}
+
 
 /* 글목록 */
 #board > .list {
@@ -283,6 +287,24 @@ footer > p {
     border: 1px solid #6d6d6d;
     background: #888;
     color: #fff;
+}
+
+#board > .list > form {
+    float: right;
+    margin-bottom: -14px;
+}
+
+#board > .list > form > input[name=search]{
+    width: 200px;
+    height: 26px;
+    text-indent: 6px;
+    border: 1px solid #d7d7d7;
+}
+#board > .list > form > input[type=submit]{
+    border: 1px solid #d7d7d7;
+    background: #f2f2f2; 
+    color: #111;
+    padding: 6px;
 }
 
 /* 글쓰기 */
@@ -555,4 +577,18 @@ footer > p {
 #user > .find > div {
     float: right;
     margin-top: 10px;
+}
+
+#btnPwModify{
+    background-color: #2e658a;
+    color: white;
+    border-radius: 3px;
+    width: 78px;
+    height: 22px;
+    font-size: 11px;
+}
+#btnUserDelete{
+	padding:6px;
+	background: #ed2f2f;
+	color: #fff;
 }

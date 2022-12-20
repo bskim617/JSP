@@ -6,6 +6,10 @@
     <title>게시판</title>
     <link rel="stylesheet" href="/JBoard2/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/JBoard2/js/postcode.js"></script>
+    <script src="/JBoard2/js/validation.js"></script>
+    <script src="/JBoard2/js/emailAuth.js"></script>
 </head>
 <body>
     <div id="wrapper">

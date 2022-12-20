@@ -10,7 +10,29 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
   
-  <!-- 인코등 필터 -->
+  <filter>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<filter-class>kr.co.jboard2.filter.AutoLoginFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+  	<filter-name>LoginCheckFilter</filter-name>
+  	<filter-class>kr.co.jboard2.filter.LoginCheckFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>LoginCheckFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+  
+  <!-- 인코딩 필터 -->
   <filter>
   	<filter-name>SetCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

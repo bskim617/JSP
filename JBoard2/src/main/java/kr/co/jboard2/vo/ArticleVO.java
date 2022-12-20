@@ -13,17 +13,8 @@ public class ArticleVO {
 	private String regip;
 	private String rdate;
 	
-	// 추가 필드
+	// 추가
 	private String nick;
-	private String fname;
-	
-	public String getFname() {
-		return fname;
-	}
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-	
 	private int fno;
 	private String oriName;
 	private int download;
@@ -34,28 +25,24 @@ public class ArticleVO {
 	public void setFno(int fno) {
 		this.fno = fno;
 	}
-	
 	public String getOriName() {
 		return oriName;
 	}
 	public void setOriName(String oriName) {
 		this.oriName = oriName;
 	}
-	
 	public int getDownload() {
 		return download;
 	}
 	public void setDownload(int download) {
 		this.download = download;
 	}
-	
 	public String getNick() {
 		return nick;
 	}
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	
 	public int getNo() {
 		return no;
 	}

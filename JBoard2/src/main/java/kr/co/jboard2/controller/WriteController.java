@@ -1,12 +1,8 @@
 package kr.co.jboard2.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.jboard2.service.ArticleService;
 import kr.co.jboard2.vo.ArticleVO;
@@ -36,35 +31,29 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// multipart 전송 데이터 수신
-		ServletContext ctx = req.getServletContext();
-		String path = ctx.getRealPath("/file");
+		String savePath = req.getServletContext().getRealPath("/file");
+		MultipartRequest mr = service.uploadFile(req, savePath);
 		
-		MultipartRequest mr = service.uploadFile(req, path);
-		String title   = mr.getParameter("title");
-		String content = mr.getParameter("content");
-		String uid     = mr.getParameter("uid");
-		String fname   = mr.getFilesystemName("fname");
-		String regip   = req.getRemoteAddr();
+		String uid = mr.getParameter("uid");
+		String file = mr.getFilesystemName("file");
 		
-		ArticleVO article = new ArticleVO();
-		article.setTitle(title);
-		article.setContent(content);
-		article.setUid(uid);
-		article.setFname(fname);
-		article.setRegip(regip);
+		ArticleVO vo = new ArticleVO();
+		vo.setTitle(mr.getParameter("title"));
+		vo.setContent(mr.getParameter("content"));
+		vo.setUid(uid);
+		vo.setFile(file == null ? 0 : 1);
+		vo.setRegip(req.getRemoteAddr());
 		
-		int parent = service.insertArticle(article);
+		int parent = service.insertArticle(vo);
 		
-		// 파일을 첨부했으면 파일처리
-		if(fname != null){			
-			// 파일명 수정
-			String newName = service.renameFile(article, path);
+		// 파일 첨부 처리
+		if(file != null) {
+			String nFile = service.renameFile(file, uid, savePath);
 			
-			// 파일 테이블 저장
-			service.insertFile(parent, newName, fname);
+			// 파일테이블 저장
+			service.insertFile(parent, nFile, file);
+			
 		}
-		
-		resp.sendRedirect("/JBoard2/list.do");	
+		resp.sendRedirect("/JBoard2/list.do");
 	}
 }
